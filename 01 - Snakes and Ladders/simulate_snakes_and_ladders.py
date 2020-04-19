@@ -7,8 +7,7 @@ Created on Sun Apr 19 14:58:46 2020
 Python Script to simulate snakes and ladder game. Simulates 5000 games and each game can have maximun 1000 turns.
 
 Q1 - What is the distribution of nuber of turns required to complete the game.
-Q2 - What is the probability distribution of compelting the game in 'x' turns.
-Q3 - What is the distribution of Snakes or Ladders encountered for completed games.
+Q2 - What is the probability of a game to be completed in 'x' turns.
 """
 
 import pandas as pd
@@ -51,9 +50,20 @@ for i in range(sample_games):
             break
         
     all_games_stats_df.loc[i,['moves','snakes','ladders']] = [num_moves, num_snakes, num_ladders] 
-    
-plt.hist(all_games_stats_df['moves'], bins=20)
+
+# Creating numpy array for using with pyplot    
+moves_np = np.array(all_games_stats_df['moves'])
+
+# Plotting Histogram to show distribution of moves to finish a game
+plt.hist(moves_np, bins=20)
 plt.title('Distribution of Moves required to complete {} games'.format(sample_games))
 plt.xlabel('No of Moves')
 plt.ylabel('No of Games')
 plt.show()      
+
+# Plotting Histogram to show what % of games are finished in X moves
+plt.hist(moves_np, bins=30, cumulative = 1 , density=True, histtype='step')
+plt.title('Probability of Game Completion in X moves')
+plt.xlabel('No of Moves')
+plt.ylabel('Probability')
+plt.show()
