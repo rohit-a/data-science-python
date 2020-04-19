@@ -19,3 +19,4 @@ Based on the board in image
  4. If player encounters a snake, he has to come down to the end of the snake.
  5. Getting a 6 allows palyer to roll the dice again and move total number of both the rolls.
  6. The player completes a game when he reaches cell 100.
+ 7. Maximum number of turns a player gets is 1000.

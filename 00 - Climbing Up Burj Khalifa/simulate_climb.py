@@ -61,7 +61,7 @@ plt.title('Distribution of Floor reached over {} walks'.format(sample_walks))
 plt.show()
 
 # Plot probability of reaching a floor over 100 steps
-plt.hist(ends, density=True, histtype='step', cumulative=-1, label='Reversed emp.')
+plt.hist(ends, density=True, histtype='step', cumulative=-1)
 plt.xlabel('Floor Reached')
 plt.ylabel('Probability')
 plt.title('Probability of Floor Reached over {} steps'.format(num_steps))
