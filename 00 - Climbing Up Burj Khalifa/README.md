@@ -3,6 +3,9 @@
 Player starts a game of climbing Burj Khalifa based on the number he gets on the roll of a dice. We would like to simulate 
 several such climbs, each climb comprising of 100 turns to find out what is the final floor reached in each climb.
 
+Q1 - What is the distribution of floor reached over 5000 walks.
+Q2 - What is the probability distribution of reaching a floor over 100 turns.
+
 Based on the problem in [Data Camp - Hacker Statistics Problem](https://campus.datacamp.com/courses/intermediate-python/case-study-hacker-statistics?ex=5)
 
 ### Game Rules:
