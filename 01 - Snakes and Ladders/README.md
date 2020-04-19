@@ -10,7 +10,7 @@ Q3 - What is the distribution of Snakes or Ladders encountered for completed gam
 
 Based on the board in image 
 
-![](https://github.com/rohit-a/data-science-python/blob/master/00%20-%20Climbing%20Up%20Burj%20Khalifa/VIZ-02-Distribution_of_Floor_Reached.png)
+![](https://github.com/rohit-a/data-science-python/blob/master/01%20-%20Snakes%20and%20Ladders/IMG-01-Snakes_and_ladders_board.jpg)
 
 ### Game Rules:
  1. Player starts at cell 1 and throws a dice on each turn.
