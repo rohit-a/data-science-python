@@ -9,8 +9,8 @@ Rules:
     1. Player starts at floor 0 and throws a dice on each turn.
     2. If he gets 1,2 - player has to come down 1 floor.
     3. If he gets 3,4,5 - player climbs 1 floor.
-    4. IF he gets 6, he gets to throw 1 more time and climbs as many floors as the number in the throw.
-    5. Clumsiness: 0.1% of time player trips and falls to FLoor 0 (Without damage :D)
+    4. If he gets 6, he gets to throw 1 more time and climbs as many floors as the number in the throw.
+    5. Clumsiness: 0.1% of time player trips and falls to Floor 0 (Without damage :D)
     6. By default, player gets to take 100 steps (throws dice 100 times)
     
 Q1 - What is the distribution of floor reached over 5000 walks.
