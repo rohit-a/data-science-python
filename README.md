@@ -1,2 +1,3 @@
-# data-science-python
- Learnings and Experiments in Data Science using Python 
+# Python Data Science Experiments and Learnings
+ 01 - Burj Khalifa Climbing Game
+ 02 - Snakes and Ladders
