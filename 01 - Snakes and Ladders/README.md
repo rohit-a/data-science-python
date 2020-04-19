@@ -17,3 +17,12 @@ Based on the board in image
  5. Getting a 6 allows palyer to roll the dice again and move total number of both the rolls.
  6. The player completes a game when he reaches cell 100.
  7. Maximum number of turns a player gets is 1000.
+ 
+ ##### Distribution of Moved to complete 5000 games
+ 
+ ![](https://github.com/rohit-a/data-science-python/blob/master/01%20-%20Snakes%20and%20Ladders/VIZ-01-Distribution_of_Moves_to_Complete_Game.png)
+ 
+ ##### Probability distribution of completing a game in X moves
+ 
+ ![](https://github.com/rohit-a/data-science-python/blob/master/01%20-%20Snakes%20and%20Ladders/VIZ-02-Probability_of_Game_Completion.png)
+ 
