@@ -9,7 +9,6 @@ Global Data from COVID-19 Data Repository by CSSE at Johns Hopkins University  h
 """
 
 import pandas as pd
-import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Dictionary to store file links
@@ -38,37 +37,49 @@ def get_data(case_type, file_path):
     
     return file_df
 
-def plot_data(df, columns, x='Date', row='Country', title=""):
-    df = df[columns].reset_index().melt(id_vars=[row, x], var_name='Metric', value_name='Metric Value')
-    g=sns.relplot(x=x, y='Metric Value', col='Metric', data=df, hue=row, kind='line', facet_kws={'sharey':'col'})  
-    g.set_xticklabels(rotation=45)
-    g.fig.suptitle(title, y=1.01)
 
-# Creating data frame with appended Confirmed, Recovered and Deaths data
+# Creating combined data frame with appended Confirmed, Recovered and Deaths data
 covid19_data = pd.concat([get_data(file_type, path) for file_type, path in files_url.items()])
-
-# Creating signle row for Country, Date by aggregating data.
-covid19_data = covid19_data.groupby(['Country','Date']).sum()
+covid19_data = covid19_data.groupby(['Country','Date']).sum().sort_values(['Country','Date'])
 
 # Calculating Active cases and % Cases Active
 covid19_data['Active'] = covid19_data['Confirmed'] - (covid19_data['Deaths'] + covid19_data['Recovered'])
 covid19_data['% Cases Active'] = covid19_data['Active']/covid19_data['Confirmed']*100
 
-# Dividing in countries in groups based on Confirmed cases
-bin_values = [0, 15000, 30000, 100000, 500000, float('Inf')]
-bin_labels = ["< 15,000", "15,000 - 30,000", "30,000 - 100,000", "100,000 - 500,000", "500,000+"]
-cases_by_country = covid19_data.groupby('Country')[['Confirmed']].max().sort_values('Confirmed', ascending=False)
-cases_by_country['group'] = pd.cut(cases_by_country['Confirmed'], bins=bin_values , labels=bin_labels)
 
-# Plotting #Active Cases and % Active Cases
+# Creating Data frame to segment countries based on % Current Cases Active and % Active Cases from peak
+# Calculate max_active, current_active and current_active_pct 
+country_map = covid19_data.groupby(['Country']).agg(max_active = ('Active', 'max'),
+                                                    current_active = ('Active', 'last'),
+                                                    current_active_pct = ('% Cases Active', 'last'))
+# Calculate % Active cases from peak
+country_map['active_from_peak_pct'] = country_map['current_active']/country_map['max_active']*100
 
-#Plotting for single country: US
-countries = ['US']
-data = covid19_data.loc[countries]
-plot_data(data, ['Active', '% Cases Active'], 'Date', 'Country', 'Active Cases in '+str(countries))
+# Defining bin limits and segmenting Countries 
+bin_active_from_peak_pct = [-1, 25, 50, 75, 90, 99, 101]
+bin_active_from_peak_pct_labels = ['< 25%', '25% - 50%', '50% - 70%', '75% - 90%', '90% - 99%', '100% (Active Cases Still Rising)']
+country_map['Group % Cases Active From Peak'] = pd.cut(country_map['active_from_peak_pct'], bins=bin_active_from_peak_pct , labels=bin_active_from_peak_pct_labels)
 
-#Plotting for Bins "30,000 - 100,000", "100,000 - 500,000"
-for  val in ["30,000 - 100,000", "100,000 - 500,000"]:
-    countries = cases_by_country[cases_by_country['group'] == val].reset_index()['Country'].unique()
-    data = covid19_data.loc[countries]
-    plot_data(data, ['Active', '% Cases Active'], 'Date', 'Country', 'Active Cases in Countries with '+val+' Confirmed Cases')
+bin_active_pct = [-1, 25, 50, 75, 90, 101]
+bin_active_pct_labels = ['< 25%', '25% - 50%', '50% - 75%', '75% - 90%', '> 90%']
+country_map['Group % Cases Active'] = pd.cut(country_map['current_active_pct'], bins=bin_active_pct, labels=bin_active_pct_labels)
+
+
+# Plotting Charts
+max_countries_to_plot = 10
+
+# Plotting Active Cases
+for country_grp in reversed(bin_active_from_peak_pct_labels):
+    list_country = country_map[country_map['Group % Cases Active From Peak']==country_grp].sort_values('current_active', ascending=False).index.unique()[:max_countries_to_plot]
+    plot_df = covid19_data.loc[list_country].reset_index()
+    g = sns.relplot(x='Date', y='Active', data=plot_df, col='Country', col_wrap=5, col_order=list_country, hue='Country', kind='line', facet_kws={'sharey':None})
+    g.set_xticklabels(rotation=45)
+    g.fig.suptitle("Current Active Cases % from Peak: "+country_grp, y=1.01)
+
+# Plotting % Active Cases of Total Confirmed Cases
+for country_grp in reversed(bin_active_pct_labels):
+    list_country = country_map[country_map['Group % Cases Active']==country_grp].sort_values('current_active', ascending=False).index.unique()[:max_countries_to_plot]
+    plot_df = covid19_data.loc[list_country].reset_index()
+    g = sns.relplot(x='Date', y='% Cases Active', data=plot_df, col='Country', col_wrap=5, col_order=list_country, hue='Country', kind='line')
+    g.set_xticklabels(rotation=45)
+    g.fig.suptitle("Current Active Cases % from Total Confirmed Cases: "+country_grp, y=1.01)
