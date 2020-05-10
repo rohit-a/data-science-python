@@ -67,6 +67,8 @@ country_map['Group % Cases Active'] = pd.cut(country_map['current_active_pct'], 
 
 # Plotting Charts
 max_countries_to_plot = 10
+sns.set_style('ticks')
+sns.set_context('talk')
 
 # Plotting Active Cases
 for country_grp in reversed(bin_active_from_peak_pct_labels):
@@ -74,7 +76,7 @@ for country_grp in reversed(bin_active_from_peak_pct_labels):
     plot_df = covid19_data.loc[list_country].reset_index()
     g = sns.relplot(x='Date', y='Active', data=plot_df, col='Country', col_wrap=5, col_order=list_country, hue='Country', kind='line', facet_kws={'sharey':None})
     g.set_xticklabels(rotation=45)
-    g.fig.suptitle("Current Active Cases % from Peak: "+country_grp, y=1.01)
+    g.fig.suptitle("Current Active Cases % from Peak: "+country_grp, y=1.02)
 
 # Plotting % Active Cases of Total Confirmed Cases
 for country_grp in reversed(bin_active_pct_labels):
@@ -82,4 +84,5 @@ for country_grp in reversed(bin_active_pct_labels):
     plot_df = covid19_data.loc[list_country].reset_index()
     g = sns.relplot(x='Date', y='% Cases Active', data=plot_df, col='Country', col_wrap=5, col_order=list_country, hue='Country', kind='line')
     g.set_xticklabels(rotation=45)
-    g.fig.suptitle("Current Active Cases % from Total Confirmed Cases: "+country_grp, y=1.01)
+    g.fig.suptitle("Current Active Cases % from Total Confirmed Cases: "+country_grp, y=1.02)
+    
