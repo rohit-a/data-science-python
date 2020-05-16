@@ -4,7 +4,7 @@ One of the most popular datasets for COVID-19 is made available by Johns Hopkins
 
 In this project, I have utilized pandas to read, transpose and combine data from GitHub. Pandas was also very handy to create additional metrics and perform calculations. Seaborn was used to visualize processed data.
 
- ![##### Kaggle Link](https://www.kaggle.com/rohita/visualizing-active-covid-19-cases-by-country)
+ [Kaggle Link](https://www.kaggle.com/rohita/visualizing-active-covid-19-cases-by-country)
 
  
- ![##### LinkedIn Article ](https://www.linkedin.com/pulse/how-countries-faring-against-covid19-using-pandas-seaborn-anurag)
+ [LinkedIn Article](https://www.linkedin.com/pulse/how-countries-faring-against-covid19-using-pandas-seaborn-anurag)
