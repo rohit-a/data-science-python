@@ -655,11 +655,6 @@ param_grid = dict(tol=tol, max_iter=max_iter)
 
 
 ```python
-# Define the grid of values for tol and max_iter
-tol = [0.01, 0.001]
-max_iter = [100, 150]
-param_grid = dict(tol=tol, max_iter=max_iter)
-
 # Create a dictionary where tol and max_iter are keys and the lists of their values are the corresponding values
 param_grid = dict(tol=tol, max_iter=max_iter)
 
